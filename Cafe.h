@@ -19,7 +19,7 @@ private:
 	Time startTime;
 	Time endTime;
 
-	unsigned int priñe;
+	unsigned int price;
 	unsigned int tableNum;
 
 	std::vector<Table> tables;
@@ -43,7 +43,7 @@ public:
 	Time getEndTime();
 	std::list<Client> getQueue();
 	unsigned int getPrice();
-	void setPriñe(unsigned int p);
+	void setPrice(unsigned int p);
 	void setStartTime(Time st);
 	void setEndTime(Time et);
 	int sitClientAtTable(Client client, int tableNum);

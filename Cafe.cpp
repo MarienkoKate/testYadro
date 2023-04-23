@@ -5,7 +5,7 @@ Cafe::Cafe() {
 	tableNum = 0;
 	startTime = Time(0, 0);
 	endTime = Time(0, 0);
-	priñe = 0;
+	price = 0;
 	queue.resize(0);
 
 }
@@ -93,10 +93,10 @@ std::list<Client> Cafe::getQueue() {
 	return queue;
 }
 unsigned int Cafe::getPrice() {
-	return priñe;
+	return price;
 }
-void Cafe::setPriñe(unsigned int p) {
-	priñe = p;
+void Cafe::setPrice(unsigned int p) {
+	price = p;
 }
 void Cafe::setStartTime(Time st) {
 	startTime = st;
@@ -150,7 +150,7 @@ void Cafe::deleteFromAllClients(Client c) {
 }
 void Cafe::cleanTable(int num, Time endTime) {
 
-	tables[num].countRev(priñe, endTime);
+	tables[num].countRev(price, endTime);
 	tables[num].countTime(endTime);
 	tables[num].clean();
 }

@@ -72,7 +72,7 @@ void readFile(std::string fileName, Cafe& cafe) {
 				std::cout << cafe.getStartTime() << std::endl;
 			}
 			else if (lineNum == 2) {
-				cafe.setPriñe(std::stoi(line));
+				cafe.setPrice(std::stoi(line));
 			}
 			else {
 				std::cout << line << std::endl;
