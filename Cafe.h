@@ -19,7 +19,7 @@ private:
 	Time startTime;
 	Time endTime;
 
-	unsigned int price;
+	unsigned int priñe;
 	unsigned int tableNum;
 
 	std::vector<Table> tables;
@@ -43,7 +43,7 @@ public:
 	Time getEndTime();
 	std::list<Client> getQueue();
 	unsigned int getPrice();
-	void setPrice(unsigned int p);
+	void setPriñe(unsigned int p);
 	void setStartTime(Time st);
 	void setEndTime(Time et);
 	int sitClientAtTable(Client client, int tableNum);
@@ -56,4 +56,9 @@ public:
 	void closeCafe();
 	std::string getTablesInfo();
 };
+
+Time stringToTime(std::string s);
+void chekFile(std::string fileName);
+std::vector<std::string> splitString(std::string s);
+void readFile(std::string fileName, Cafe& cafe);
 #endif
