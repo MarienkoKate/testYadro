@@ -43,6 +43,13 @@ public:
 
 		return os << hour << ":" << min << " ";
 	}
+	bool operator<(const Time& t)
+	{
+		if (hour < t.hour) return true;
+		else if (hour == t.hour && min < t.min) return true;
+		else return false;
+
+	}
 	std::string toString() {
 		std::string h = "";
 		std::string m = "";

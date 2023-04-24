@@ -13,58 +13,6 @@
 #include "Event3.h"
 #include "Event4.h"
 #include <cassert>
-
-void chekFile(std::string fileName) {
-	
-	//std::string str = "08:48 1 client1";
-
-	std::regex time("^(([0,1][0-9])|(2[0-3])):[0-5][0-9]\\s\(([0,1][0-9])|(2[0-3])):[0-5][0-9]$");
-	std::regex number(R"(^\d*$)");
-	std::string r; //= //"^(([0,1][0-9])|(2[0-3])):[0-5][0-9]\\s\[1-4]\\s\[a-z0-9_-]+(\\s\[1-" + z + "]|$)$";
-	
-	
-
-	std::string line;
-	unsigned int lineNum = 1;
-
-	//r = "^(([0,1][0-9])|(2[0-3])):[0-5][0-9]\\s\[1-4]\\s\[a-z0-9_-]+(\\s\[1-3]|$)$";
-	std::ifstream in(fileName);
-	if (in.is_open())
-	{
-		while (getline(in, line))
-		{
-			if (lineNum == 1) {
-				if (!regex_match(line, number)) {
-					std::string ex = "invalid value in line " + std::to_string(lineNum);
-				
-					char* cstr = new char[ex.length() + 1];
-					strcpy(cstr, ex.c_str());
-					// do stuff
-					throw std::exception(cstr);
-					delete[] cstr;
-				
-				}
-				r = "^(([0,1][0-9])|(2[0-3])):[0-5][0-9]\\s\[1-4]\\s\[a-z0-9_-]+(\\s\[1-" + line + "]|$)$";
-				
-			}
-			else if (lineNum == 2) {
-				if (!regex_match(line, time)) throw std::exception("invalid value in line " + lineNum);
-			}
-			else if (lineNum == 3) {
-				if (!regex_match(line, number)) std::cout << "invalid value in line " + std::to_string(lineNum) << std::endl;//throw("invalid value in line " + lineNum);
-			}
-			else {
-				if (!regex_match(line, std::regex(r))) std::cout << "invalid value in line " + lineNum << std::endl;//throw("invalid value in line " + lineNum);
-			}
-
-			lineNum++;
-		}
-
-	}
-	in.close();
-	
-}
-
 Time stringToTime(std::string s) {
 
 	std::regex regex1(":");
@@ -77,18 +25,94 @@ Time stringToTime(std::string s) {
 	std::vector<Time> delimTime;
 
 	for (int i = 0; i != out.size(); i++) {
-	
+
 		int tmp = std::stoi(out[i]);
-	
+
 		if (i % 2 == 0) hour = tmp;
 		else min = tmp;
-	
+
 		if (i % 2 == 1 && i != 0) return Time(hour, min);
-	
-	
+
+
 	}
 	return Time();
 }
+void chekFile(std::string fileName) {
+	
+	//std::string str = "08:48 1 client1";
+
+	std::regex time("^(([0,1][0-9])|(2[0-3])):[0-5][0-9]\\s\(([0,1][0-9])|(2[0-3])):[0-5][0-9]$");
+	std::regex number(R"(^\d*$)");
+	std::string r; //= //"^(([0,1][0-9])|(2[0-3])):[0-5][0-9]\\s\[1-4]\\s\[a-z0-9_-]+(\\s\[1-" + z + "]|$)$";
+	
+	
+
+	std::string line;
+	unsigned int lineNum = 1;
+	std::string ex;
+	char* cstr;
+	//r = "^(([0,1][0-9])|(2[0-3])):[0-5][0-9]\\s\[1-4]\\s\[a-z0-9_-]+(\\s\[1-3]|$)$";
+	std::ifstream in(fileName);
+	Time prevTime(0, 0);
+	Time nowTime(0 ,0);
+	if (in.is_open())
+	{
+		while (getline(in, line))
+		{
+			if (lineNum == 1) {
+				if (!regex_match(line, number)) {
+					ex = "invalid data in line " + std::to_string(lineNum) + ": " + line;
+					cstr = new char[ex.length() + 1];
+					strcpy(cstr, ex.c_str());
+					throw std::exception(cstr);
+				}
+				r = "^(([0,1][0-9])|(2[0-3])):[0-5][0-9]\\s\[1-4]\\s\[a-z0-9_-]+(\\s\[1-" + line + "]|$)$";
+				
+			}
+			else if (lineNum == 2) {
+				if (!regex_match(line, time)) {
+					ex = "invalid data in line " + std::to_string(lineNum) + ": " + line;
+					cstr = new char[ex.length() + 1];
+					strcpy(cstr, ex.c_str());
+					throw std::exception(cstr);
+				}
+			}
+			else if (lineNum == 3) {
+				if (!regex_match(line, number)) {
+					ex = "invalid data in line " + std::to_string(lineNum) + ": " + line;
+					cstr = new char[ex.length() + 1];
+					strcpy(cstr, ex.c_str());
+					throw std::exception(cstr);
+				}
+			}
+			else {
+				if (!regex_match(line, std::regex(r))) {
+					ex = "invalid data in line " + std::to_string(lineNum) + ": " + line;
+					cstr = new char[ex.length() + 1];
+					strcpy(cstr, ex.c_str());
+					throw std::exception(cstr);
+				}
+				else {
+					nowTime = Time(stringToTime(line));
+					if (nowTime < prevTime) {
+						ex = "invalid data in line (previous time is greater than current time) " + std::to_string(lineNum) + ": " + line;
+						cstr = new char[ex.length() + 1];
+						strcpy(cstr, ex.c_str());
+						throw std::exception(cstr);
+					}
+					prevTime = nowTime;
+				}
+			}
+
+			lineNum++;
+		}
+
+	}
+	in.close();
+	
+}
+
+
 std::vector<std::string> splitString(std::string s) {
 	std::regex regex1(" ");
 	std::vector<std::string> out(
