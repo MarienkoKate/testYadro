@@ -9,13 +9,13 @@ git clone https://github.com/MarienkoKate/testYadro.git
 Скомпилировать файлы
 
 ```
-g++ Main.cpp Cafe.cpp -o main
+g++ -o main Main.cpp Cafe.cpp
 ```
 
 Запуск
 
 ```
-.\a main
+./main file.txt
 ```
 
 ## Тесты
