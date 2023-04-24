@@ -41,8 +41,7 @@ void chekFile(std::string fileName) {
 	unsigned int lineNum = 1;
 
 	std::string ex;
-	char* cstr;
-
+	
 	Time prevTime(0, 0);
 	Time nowTime(0, 0);
 
@@ -55,9 +54,7 @@ void chekFile(std::string fileName) {
 			if (lineNum == 1) {
 				if (!regex_match(line, number)) {
 					ex = "Error: invalid data in line " + std::to_string(lineNum) + ": " + line;
-					cstr = new char[ex.length() + 1];
-					strcpy(cstr, ex.c_str());
-					throw std::exception(cstr);
+					throw(ex);
 				}
 				r = "^(([0,1][0-9])|(2[0-3])):[0-5][0-9]\\s\[1-4]\\s\[a-z0-9_-]+(\\s\[1-" + line + "]|$)$";
 
@@ -65,33 +62,25 @@ void chekFile(std::string fileName) {
 			else if (lineNum == 2) {
 				if (!regex_match(line, time)) {
 					ex = "Error: invalid data in line " + std::to_string(lineNum) + ": " + line;
-					cstr = new char[ex.length() + 1];
-					strcpy(cstr, ex.c_str());
-					throw std::exception(cstr);
+					throw(ex);
 				}
 			}
 			else if (lineNum == 3) {
 				if (!regex_match(line, number)) {
 					ex = "Error: invalid data in line " + std::to_string(lineNum) + ": " + line;
-					cstr = new char[ex.length() + 1];
-					strcpy(cstr, ex.c_str());
-					throw std::exception(cstr);
+					throw(ex);
 				}
 			}
 			else {
 				if (!regex_match(line, std::regex(r))) {
 					ex = "Error: invalid data in line " + std::to_string(lineNum) + ": " + line;
-					cstr = new char[ex.length() + 1];
-					strcpy(cstr, ex.c_str());
-					throw std::exception(cstr);
+					throw(ex);
 				}
 				else {
 					nowTime = Time(stringToTime(line));
 					if (nowTime < prevTime) {
 						ex = "Error: invalid data in line (previous time is greater than current time) " + std::to_string(lineNum) + ": " + line;
-						cstr = new char[ex.length() + 1];
-						strcpy(cstr, ex.c_str());
-						throw std::exception(cstr);
+						throw(ex);
 					}
 					prevTime = nowTime;
 				}
@@ -144,7 +133,7 @@ void readFile(std::string fileName, Cafe& cafe) {
 				std::cout << cafe.getStartTime() << std::endl;
 			}
 			else if (lineNum == 2) {
-				cafe.setPriñe(std::stoi(line));
+				cafe.setPrice(std::stoi(line));
 			}
 			else {
 				std::cout << line << std::endl;
@@ -185,7 +174,7 @@ Cafe::Cafe() {
 	tableNum = 0;
 	startTime = Time(0, 0);
 	endTime = Time(0, 0);
-	priñe = 0;
+	price = 0;
 	queue.resize(0);
 
 }
@@ -273,10 +262,10 @@ std::list<Client> Cafe::getQueue() {
 	return queue;
 }
 unsigned int Cafe::getPrice() {
-	return priñe;
+	return price;
 }
-void Cafe::setPriñe(unsigned int p) {
-	priñe = p;
+void Cafe::setPrice(unsigned int p) {
+	price = p;
 }
 void Cafe::setStartTime(Time st) {
 	startTime = st;
@@ -330,7 +319,7 @@ void Cafe::deleteFromAllClients(Client c) {
 }
 void Cafe::cleanTable(int num, Time endTime) {
 
-	tables[num].countRev(priñe, endTime);
+	tables[num].countRev(price, endTime);
 	tables[num].countTime(endTime);
 	tables[num].clean();
 }
