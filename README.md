@@ -77,7 +77,6 @@ g++ -o main Main.cpp Cafe.cpp
 
 - клиент пытается снова сесть за свой же стол;
 
-Результат работы программы:
 ![Image alt](https://github.com/MarienkoKate/testYadro/blob/main/results/5.png)
 
 Демонстрация работы столов:
