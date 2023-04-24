@@ -34,12 +34,21 @@ void chekFile(std::string fileName) {
 		while (getline(in, line))
 		{
 			if (lineNum == 1) {
-				if (!regex_match(line, number)) std::cout << "invalid value in line " + std::to_string(lineNum) << std::endl;//throw("invalid value in line " + lineNum);
+				if (!regex_match(line, number)) {
+					std::string ex = "invalid value in line " + std::to_string(lineNum);
+				
+					char* cstr = new char[ex.length() + 1];
+					strcpy(cstr, ex.c_str());
+					// do stuff
+					throw std::exception(cstr);
+					delete[] cstr;
+				
+				}
 				r = "^(([0,1][0-9])|(2[0-3])):[0-5][0-9]\\s\[1-4]\\s\[a-z0-9_-]+(\\s\[1-" + line + "]|$)$";
 				
 			}
 			else if (lineNum == 2) {
-				if (!regex_match(line, time)) std::cout << "invalid value in line " + std::to_string(lineNum) << std::endl;//throw("invalid value in line " + lineNum);
+				if (!regex_match(line, time)) throw std::exception("invalid value in line " + lineNum);
 			}
 			else if (lineNum == 3) {
 				if (!regex_match(line, number)) std::cout << "invalid value in line " + std::to_string(lineNum) << std::endl;//throw("invalid value in line " + lineNum);
@@ -153,7 +162,13 @@ void readFile(std::string fileName, Cafe& cafe) {
 
 int main() {
 	Cafe c;
-	chekFile("cafffe.txt");
+	try {
+		chekFile("cafffe.txt");
+	}
+	catch (const std::exception& e) {
+		std::cout << e.what();
+		exit(0);
+	}
 	readFile("cafffe.txt", c);
 	
 	///return 0;
