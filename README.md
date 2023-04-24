@@ -44,17 +44,25 @@ g++ -o main Main.cpp Cafe.cpp
 
 ![Image alt](https://github.com/MarienkoKate/testYadro/blob/main/results/4.png)
 
-Таблица, для наглядного изменения работы компьютерного клуба:
+Демонстрация работы столов:
+```
+1 стол:
 
-Время | 1 стол | 2 стол | 3 стол | Выручка | Время работы стола
---- | --- | --- | --- | --- | ---
-09:54 | client1 |  | 
-10:25 | client1 | client2 | 
-10:59 | client1 | client2 | client3 | 
-12:33 | client4 | client2 | client3 | (30, 0, 0) | (2:39, 0, 0)
-12:43 | client4 | client5 | client3 | (30, 30, 0) | (2:39, 2:18, 0)
-15:52 | client6 | client5 | client3 | (70, 30, 0) | (5:58, 2:18, 0)
-19:00 | client6 | client5 | client3 | (110, 100, 90) | (9:06, 08:35, 8:01)
+09:54 - 12:33 client1
+12:33 - 15:52 client4
+15:52 - 19:00 client6
+```
+```
+2 стол:
+
+10:25 - 12:43 client2
+```
+```
+3 стол:
+
+10:59 - 19:00 client3
+
+```
 
 
 
@@ -71,7 +79,7 @@ g++ -o main Main.cpp Cafe.cpp
 Результат работы программы:
 ![Image alt](https://github.com/MarienkoKate/testYadro/blob/main/results/5.png)
 
-Демонстрация работы столов
+Демонстрация работы столов:
 ```
 1 стол:
 
