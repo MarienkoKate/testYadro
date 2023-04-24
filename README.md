@@ -56,6 +56,7 @@ g++ -o main Main.cpp Cafe.cpp
 2 стол:
 
 10:25 - 12:43 client2
+12:43 - 19:00 client5
 ```
 ```
 3 стол:
