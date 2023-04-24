@@ -19,7 +19,7 @@ g++ -o main Main.cpp Cafe.cpp
 Запуск
 
 ```
-./main file.txt
+./main file1
 ```
 
 ## Тесты
