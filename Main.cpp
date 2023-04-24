@@ -1,4 +1,5 @@
 #define _CRT_SECURE_NO_WARNINGS
+#define EXIT_SUCCESS
 #include <iostream>
 #include <string>
 #include <vector>
@@ -11,7 +12,49 @@
 #include "Event2.h"
 #include "Event3.h"
 #include "Event4.h"
+#include <cassert>
 
+void chekFile(std::string fileName) {
+	
+	//std::string str = "08:48 1 client1";
+
+	std::regex time("^(([0,1][0-9])|(2[0-3])):[0-5][0-9]\\s\(([0,1][0-9])|(2[0-3])):[0-5][0-9]$");
+	std::regex number(R"(^\d*$)");
+	std::string r; //= //"^(([0,1][0-9])|(2[0-3])):[0-5][0-9]\\s\[1-4]\\s\[a-z0-9_-]+(\\s\[1-" + z + "]|$)$";
+	
+	
+
+	std::string line;
+	unsigned int lineNum = 1;
+
+	//r = "^(([0,1][0-9])|(2[0-3])):[0-5][0-9]\\s\[1-4]\\s\[a-z0-9_-]+(\\s\[1-3]|$)$";
+	std::ifstream in(fileName);
+	if (in.is_open())
+	{
+		while (getline(in, line))
+		{
+			if (lineNum == 1) {
+				if (!regex_match(line, number)) std::cout << "invalid value in line " + std::to_string(lineNum) << std::endl;//throw("invalid value in line " + lineNum);
+				r = "^(([0,1][0-9])|(2[0-3])):[0-5][0-9]\\s\[1-4]\\s\[a-z0-9_-]+(\\s\[1-" + line + "]|$)$";
+				
+			}
+			else if (lineNum == 2) {
+				if (!regex_match(line, time)) std::cout << "invalid value in line " + std::to_string(lineNum) << std::endl;//throw("invalid value in line " + lineNum);
+			}
+			else if (lineNum == 3) {
+				if (!regex_match(line, number)) std::cout << "invalid value in line " + std::to_string(lineNum) << std::endl;//throw("invalid value in line " + lineNum);
+			}
+			else {
+				if (!regex_match(line, std::regex(r))) std::cout << "invalid value in line " + lineNum << std::endl;//throw("invalid value in line " + lineNum);
+			}
+
+			lineNum++;
+		}
+
+	}
+	in.close();
+	
+}
 
 Time stringToTime(std::string s) {
 
@@ -72,7 +115,7 @@ void readFile(std::string fileName, Cafe& cafe) {
 				std::cout << cafe.getStartTime() << std::endl;
 			}
 			else if (lineNum == 2) {
-				cafe.setPrice(std::stoi(line));
+				cafe.setPriñe(std::stoi(line));
 			}
 			else {
 				std::cout << line << std::endl;
@@ -110,6 +153,8 @@ void readFile(std::string fileName, Cafe& cafe) {
 
 int main() {
 	Cafe c;
-	readFile("caffe.txt", c);
-
+	chekFile("cafffe.txt");
+	readFile("cafffe.txt", c);
+	
+	///return 0;
 }
